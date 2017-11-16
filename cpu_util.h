@@ -38,4 +38,8 @@ static inline void cpu_relax(void) {
 #define cpu_relax() do {} while (0)
 #endif
 
+#ifndef CACHELINE_SIZE
+#define CACHELINE_SIZE 64
+#endif
+
 #endif

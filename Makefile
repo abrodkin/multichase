@@ -11,11 +11,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+#CFLAGS=-std=gnu99 -g -O2 -fomit-frame-pointer -fno-unroll-loops -Wall -Wstrict-prototypes -Wmissing-prototypes -Wshadow -Wmissing-declarations -Wnested-externs -Wpointer-arith -W -Wno-unused-parameter -Werror -pthread
 CFLAGS=-std=gnu99 -g -O2 -fomit-frame-pointer -fno-unroll-loops -Wall -Wstrict-prototypes -Wmissing-prototypes -Wshadow -Wmissing-declarations -Wnested-externs -Wpointer-arith -W -Wno-unused-parameter -Werror -pthread
 LDFLAGS=-g -O2 -static -pthread
 LDLIBS=-lrt
+ARCH := $(shell uname -m)
 
-EXE=multichase fairness pingpong
+ifndef NO_LSE
+ifeq ($(ARCH),aarch64)
+ CAP := $(shell cat /proc/cpuinfo | grep atomics | head -1)
+ ifneq (,$(findstring atomics,$(CAP)))
+  CFLAGS+=-march=armv8.1-a+lse
+ endif
+endif
+endif
+
+EXE=multichase fairness pingpong stat_tracked
 
 all: $(EXE)
 
@@ -28,6 +39,12 @@ clean:
 multichase: multichase.o permutation.o arena.o util.o
 
 fairness: LDLIBS += -lm
+
+fairness: stats.o
+
+stat_tracked: stats.o
+
+stat_tracked: LDLIBS += -lm
 
 expand.h: gen_expand
 	./gen_expand 200 >expand.h.tmp
@@ -42,5 +59,7 @@ arena.o: arena.h
 multichase.o: cpu_util.h timer.h expand.h permutation.h arena.h util.h
 permutation.o: permutation.h
 util.o: util.h
-fairness.o: cpu_util.h expand.h timer.h
+fairness.o: cpu_util.h expand.h timer.h stats.h
 pingpong.o: cpu_util.h timer.h
+stats.o : stats.h
+
