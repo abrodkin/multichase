@@ -84,6 +84,9 @@ static inline void rng_init(unsigned thread_num)
 static inline perm_t rng_int(perm_t limit)
 {
         int r;
+
+        printf(" *** %s@%d: &rand_state= 0x%p\n", __func__, __LINE__, rand_state);
+
         random_r(rand_state, &r);
         // much more uniform to use [0.,1.) multiply than use an integer modulus
         return (limit + 1) * (r * 1.0 / RAND_MAX);
