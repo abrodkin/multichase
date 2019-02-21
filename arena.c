@@ -50,7 +50,7 @@ static void arena_weighted_mbind(void *arena, size_t arena_size,
 	const int32_t weight_sum = weights_cumsum[nr_weights-1]+1;
 	const int pagesize = getpagesize();
 
-	uint64_t mask = 0;
+	unsigned long mask = 0;
 	char *q = (char *)arena + arena_size;
 	rng_init(1);
 	for (char *p = arena; p < q; p += pagesize) {

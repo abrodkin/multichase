@@ -638,7 +638,7 @@ int main(int argc, char **argv)
                                         exit(1);
                                 }
                                 if (node_id >= sizeof(mbind_weights)/sizeof(mbind_weights[0])) {
-                                        fprintf(stderr, "Maximum node_id is %lu\n", sizeof(mbind_weights)/sizeof(mbind_weights[0])-1);
+                                        fprintf(stderr, "Maximum node_id is %u\n", (unsigned int)(sizeof(mbind_weights)/sizeof(mbind_weights[0])-1));
                                         exit(1);
                                 }
                                 mbind_weights[node_id] = weight;

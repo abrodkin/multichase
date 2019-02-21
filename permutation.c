@@ -102,14 +102,14 @@ void generate_chase_mixer(struct generate_chase_common_args *args)
         if (t == NULL) {
           fprintf(stderr,
                   "Could not allocate %lu bytes, check stride/memory size?\n",
-                  nr_mixer_indices * sizeof(*t));
+                  (long unsigned int)nr_mixer_indices * sizeof(*t));
           exit(1);
         }
         perm_t *r = malloc(nr_mixer_indices * NR_MIXERS * sizeof(*r));
         if (r == NULL) {
           fprintf(stderr,
                   "Could not allocate %lu bytes, check stride/memory size?\n",
-                  nr_mixer_indices * NR_MIXERS * sizeof(*r));
+                  (long unsigned int)nr_mixer_indices * NR_MIXERS * sizeof(*r));
           exit(1);
         }
         size_t i;
