@@ -154,7 +154,7 @@ static void *xadd_loop(void *data) {
       pthread_exit(0);
     }
 
-    uint64_t swap = __sync_fetch_and_add(xadder, add_amt);
+    uint64_t swap = __atomic_add_fetch_8(xadder, add_amt, __ATOMIC_ACQ_REL);
     if (me == 1 && last_lo != (uint32_t)swap) {
       last_lo = swap;
       ++nr;
