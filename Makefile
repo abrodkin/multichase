@@ -14,7 +14,7 @@
 #CFLAGS=-std=gnu99 -g -O2 -fomit-frame-pointer -fno-unroll-loops -Wall -Wstrict-prototypes -Wmissing-prototypes -Wshadow -Wmissing-declarations -Wnested-externs -Wpointer-arith -W -Wno-unused-parameter -Werror -pthread
 CFLAGS=-std=gnu99 -g -O2 -fomit-frame-pointer -fno-unroll-loops -Wall -Wstrict-prototypes -Wmissing-prototypes -Wshadow -Wmissing-declarations -Wnested-externs -Wpointer-arith -W -Wno-unused-parameter -Werror -pthread
 LDFLAGS=-g -O2 -static -pthread
-LDLIBS=-lrt
+LDLIBS=-lrt -latomic
 ARCH := $(shell uname -m)
 
 ifndef NO_LSE
